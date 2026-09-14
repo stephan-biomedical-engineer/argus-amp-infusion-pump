@@ -1,83 +1,121 @@
 # Argus — AMP Infusion Pump
 
-Reference implementation of an infusion pump whose life-critical control and
-network connectivity run on **physically separate processors**, following the
-Asymmetric Multiprocessing (AMP) paradigm. Compromise or saturation of the
-connectivity domain cannot preempt the actuation path, and command authority
-stays with the control domain.
+An infusion pump whose life-critical control and whose network connectivity run
+on **two physically separate processors**. The control domain owns the actuator
+and validates every command it receives; the connectivity domain owns the
+network and is treated as untrusted. Saturating or compromising the second one
+does not buy authority over the first.
 
 This repository is the artifact of the paper *Reference Architecture Based on
 Asymmetric Multiprocessing for IoT Infusion Pumps with Security-by-Design and
-Domain Isolation*. It contains the firmware, the gateway distribution and the
-raw measurements behind every number reported there.
+Domain Isolation*: the firmware, the gateway distribution, and the raw
+measurements behind every number reported there.
 
-## Layout
+```
+control-domain/        Zephyr RTOS firmware: infusion control, state machine,
+                       SPI slave, protocol parser with CRC-16
+connectivity-domain/   Yocto layer for the gateway: read-only rootfs, Mosquitto
+                       with mTLS, RAUC A/B updates, C++ routing service, and the
+                       measurement harness
+measurements/          What the instruments recorded, and the pipeline that
+                       turns it into the figures of the paper
+```
 
-| directory | what it is |
-|---|---|
-| `control-domain/` | Zephyr RTOS application: closed-loop infusion control, state machine, SPI slave, protocol parser with CRC-16 |
-| `connectivity-domain/` | Yocto layer for the gateway: read-only rootfs, Mosquitto with mTLS, RAUC A/B updates, the C++ routing service and the measurement harness |
-| `measurements/campaign/` | Software campaign: six load scenarios, three repetitions of 5,000 transactions each, 90,905 frames |
-| `measurements/captures/` | Logic-analyser acquisitions (`.sr`, sigrok format, 4 MS/s) and the script that produced them under fixed conditions |
-| `measurements/figures/` | Pipeline that turns captures into the figures of the paper |
+## The two instruments
+
+Every timing claim in the paper was measured twice, by instruments that share
+no clock and no software.
+
+**On target.** The firmware counts processor cycles at 160 MHz (6.25 ns per
+count) and accumulates the intervals in a metrics structure that the gateway
+reads in band. Each read clears the counters, so consecutive reads describe
+disjoint windows.
+
+**Off target.** A logic analyser samples the bus and two firmware markers at
+4 MS/s, with this channel map:
+
+| ch | signal | | ch | signal |
+|---|---|---|---|---|
+| CH0 | MOSI | | CH4 | DATA READY |
+| CH1 | MISO | | CH5 | actuation pulse |
+| CH2 | SCK  | | CH6 | **marker A** — asserted while a received frame is validated |
+| CH3 | NSS  | | CH7 | **marker B** — asserted while the actuation routine runs |
+
+The markers exist so that the timing claims do not rest on the firmware's own
+report: the interval between the rising edges of A and B is the frame-to-actuation
+path, measured from outside. They are defined in `control-domain/include/markers.h`
+and compile to nothing when the devicetree aliases are absent.
 
 ## Where each result comes from
 
-| in the paper | produced by |
+| claim in the paper | file |
 |---|---|
-| Actuation period and jitter | `measurements/captures/pulso_limpo2.sr`, `pulso_estresse2.sr` (motor pulse channel) |
-| Frame-to-actuation interval | `measurements/captures/atuacao_limpa2.sr`, `teste_sem_rede.sr`, `atuacao_estresse3.sr` — interval between the rising edges of the two firmware markers |
-| Transaction latency, detection and resynchronisation | `measurements/campaign/*.csv`, produced by `connectivity-domain/.../tools/argus_bench.cpp` and summarised by `tools/analyze_campaign.py` |
-| Protocol decode of one request/reply cycle | `measurements/figures/exportar_f3.py` over `pulso_limpo2.sr`, rendered by `gerar.mjs` |
+| Actuation period and jitter, idle vs. saturated | `measurements/captures/pulso_limpo2.sr`, `pulso_estresse2.sr` (CH5) |
+| Frame-to-actuation interval | `measurements/captures/atuacao_limpa2.sr`, `teste_sem_rede.sr`, `atuacao_estresse3.sr` (CH6→CH7) |
+| Transaction latency, fault detection, resynchronisation | `measurements/campaign/*.csv` |
+| Decoded request/reply cycle | `measurements/figures/exportar_f3.py` over `pulso_limpo2.sr` |
 | Containment of excessive rate requests | `measurements/campaign/ataques.csv` |
+| Conditions of every run | `measurements/campaign/environment.txt` |
 
-The firmware markers are defined in `control-domain/include/markers.h`: marker A
-is asserted while a received frame is validated, marker B while the actuation
-routine executes. They exist so that the timing claims do not depend on the
-firmware's own report — an external instrument measures them.
+`measurements/ANALISADOR_LOGICO.md` (Portuguese) documents the bench: wiring,
+how each quantity is extracted from the raw samples, which acquisitions are the
+definitive round, and what the captures do **not** support.
 
-## Reproducing
+## Building
 
-**Control domain.** Zephyr v4.4.0 with sysbuild and MCUboot:
+**Control domain** — Zephyr v4.4.0 with sysbuild and MCUboot:
 
-```
-west build -b nucleo_u575zi_q --sysbuild control-domain
-```
-
-**Connectivity domain.** Kas in a container; the development PKI is generated
-on first build, and no key is versioned:
-
-```
-cd connectivity-domain && ./build.sh image
+```bash
+cd control-domain
+west build -b nucleo_u575zi_q .      # perfil mínimo: SPI escravo, DATA READY, PWM
+west build -b blackpill_f411ce .     # perfil completo: + encoder, ADC, botões, OTA
 ```
 
-Network credentials come from `wpa_supplicant.conf-local`, which is ignored by
-git; the versioned `wpa_supplicant.conf-sane` is a template.
+**Connectivity domain** — kas in a container; the development PKI is generated
+on the first build and no key is versioned:
 
-**Figures.** Node 22 and Python 3 with numpy:
-
+```bash
+cd connectivity-domain
+./build.sh image     # imagem do cartão SD
+./build.sh bundle    # pacote OTA assinado
 ```
-cd measurements/figures && npm install && python3 exportar_f3.py && node gerar.mjs
+
+Wi-Fi credentials come from `wpa_supplicant.conf-local`, ignored by git; the
+versioned `wpa_supplicant.conf-sane` is a template with placeholders.
+
+## Reproducing the measurements
+
+**Campaign** (runs on the gateway, six scenarios × three repetitions × 5,000
+transactions):
+
+```bash
+connectivity-domain/meta-infusion-pump/recipes-apps/infusion-control/files/src/tools/run_campaign.sh
+python3 .../tools/analyze_campaign.py resultados/   # differentiates the MCU counters, emits the tables
 ```
 
-**Campaign.** `connectivity-domain/.../tools/run_campaign.sh` runs the six
-scenarios on the gateway; `analyze_campaign.py` differentiates the MCU counters
-and emits the tables.
+The MCU counters are cumulative on the wire and the analyser differentiates
+them; a read whose `frames_seen` falls below the number of iterations is
+rejected rather than recorded, because that was the signature of a response
+desynchronisation that once invalidated a whole campaign.
 
-## Evaluated instance
+**Figures** — Node 22 and Python 3 with numpy:
 
-The measurements reported in the paper were taken on the hardware described in
-`measurements/ANALISADOR_LOGICO.md` and in `measurements/campaign/environment.txt`,
-which record the boards, the kernel and the firmware version of each run. The
-architecture itself does not depend on those particular boards.
+```bash
+cd measurements/figures
+npm install
+python3 exportar_f3.py          # decodes one request/reply cycle into dados/f3.json
+node gerar.mjs                  # writes saida/*.svg
+```
 
 ## Status
 
-Research prototype, not a medical device and not certified for clinical use.
-The development PKI generated by the build is for development only, the sensor
-readings for bubble and occlusion are replaced by fixed safe values in the
-evaluated firmware, and the image retains development settings that grant
-unauthenticated local administrative access.
+Research prototype. Not a medical device, not certified, not for clinical use.
+The PKI generated by the build is for development only; bubble and occlusion
+readings are replaced by fixed safe values in the evaluated firmware; and the
+evaluated image retains development settings that grant unauthenticated local
+administrative access. The evaluated hardware instance is recorded in
+`measurements/campaign/environment.txt` and in the bench document — the
+architecture does not depend on those particular boards.
 
 ## Licence
 

@@ -1,5 +1,5 @@
 import zipfile, numpy as np, json, struct, sys
-ARQ=sys.argv[1] if len(sys.argv)>1 else "capturas/pulso_limpo2.sr"
+ARQ=sys.argv[1] if len(sys.argv)>1 else "../captures/pulso_limpo2.sr"
 SR=4_000_000
 tab=[]
 for i in range(256):
@@ -79,7 +79,7 @@ for (idx,f,sig,linha) in ((i_req,f_req,mosi,"MOSI"),(i_res,f_res,miso,"MISO")):
       "bytes":[{"hex":f"{int(vals[j]):02X}","t0":round((lim[j][0]-t0)/SR*1e6,3),
                 "t1":round((lim[j][1]-t0)/SR*1e6,3)} for j in range(min(n+2,len(vals)))],
       "campos":[{"nome":c[0],"de":c[1],"ate":c[2]} for c in f["campos"]]})
-json.dump(out,open("figuras/dados/f3.json","w"))
+json.dump(out,open("dados/f3.json","w"))
 print("janela %.0f us"%out["janela_us"][1], out["transferencias"], "marker A:",out["canais"]["MARK_A"]["transicoes_us"])
 print("req:"," ".join(b["hex"] for b in out["quadros"][0]["bytes"]))
 print("res:"," ".join(b["hex"] for b in out["quadros"][1]["bytes"]))

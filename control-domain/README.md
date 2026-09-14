@@ -1,4 +1,4 @@
-# Argus-MPCS_Blackpill_STM32F411_ZephyrRTOS
+# Argus — control domain (Zephyr RTOS)
 
 ## Targets suportados
 

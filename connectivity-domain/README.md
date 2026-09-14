@@ -13,7 +13,7 @@ This project implements medical industry engineering standards, moving beyond a 
 
 * **Embedded DevOps (OTA & A/B Partitioning):** Full integration with **RAUC**. The system features two root partitions (A/B) with automatic fallback support. Firmware updates are performed via signed bundles ensuring *Zero-Downtime*.
 * **Network Security (mTLS):** MQTT Broker (Mosquitto) configured exclusively for TLS traffic (port 8883) with **Mutual Authentication (mTLS)**. Only clients with authorized certificates can send or receive telemetry.
-* **Immutable File System:** Image generated with a `read-only-rootfs` and **DM-Verity**, protecting the gateway against SD card corruption and mitigating malware injection.
+* **Immutable File System:** Image built with `read-only-rootfs`, so runtime modification and malware persistence are ruled out by construction. OTA bundles use the RAUC `verity` format (`RAUC_BUNDLE_FORMAT = "verity"`), which protects the bundle itself; the running rootfs is read-only, not dm-verity backed.
 * **Service Discovery (mDNS):** Utilization of **Avahi** daemon (`argus-pump.local`) for dynamic provisioning on hospital networks without static IPs.
 * **C++ Control Layer (`argus-control-cpp`):** Custom daemon using **Boost.Asio** and **libgpiod v2** that manages MQTT communication and acts as a high-speed binary bridge to the STM32 core.
 * **Footprint Optimization:** Fully functional industrial Linux image in **~200MB**.
@@ -52,23 +52,20 @@ This script will populate the necessary directories in `recipes-connectivity/mos
 
 ## 🚀 How to Build
 
-1. **Initialize the environment:**
-   ```bash
-   source poky/oe-init-build-env
-   ```
+The build runs through **kas in a container**, driven by `build.sh` — it pins
+the layers, mounts the caches and generates the development PKI on the first
+run:
 
-2. **Add the layers:**
-   Ensure `meta-infusion-pump` and its dependencies are in your `bblayers.conf`.
+```bash
+./build.sh image     # SD card image (infusion-image)
+./build.sh bundle    # signed OTA bundle (infusion-bundle)
+./build.sh all       # both
+./build.sh shell     # interactive shell inside the kas container
+```
 
-3. **Build the base image (Flash to SD Card):**
-   ```bash
-   bitbake infusion-image
-   ```
-
-4. **Build the remote update package (OTA Bundle):**
-   ```bash
-   bitbake infusion-bundle
-   ```
+Machine-specific paths (external cache for `downloads/` and `sstate-cache/`)
+come from `local.env`, which is not versioned; `local.env.example` shows the
+shape.
 
 ## 🛠️ Authorship
 
