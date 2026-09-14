@@ -1,0 +1,15 @@
+data=2026-09-10T18:33:11-0300
+host=raspberrypi3
+kernel=Linux raspberrypi3 6.1.77-v7 #1 SMP Thu Feb  8 15:07:10 UTC 2024 armv7l GNU/Linux
+cmdline=coherent_pool=1M 8250.nr_uarts=1 snd_bcm2835.enable_headphones=0 bcm2708_fb.fbwidth=656 bcm2708_fb.fbheight=416 bcm2708_fb.fbswap=1 vc_mem.mem_base=0x3ec00000 vc_mem.mem_size=0x40000000  dwc_otg.lpm_enable=0 console=ttyS0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait  net.ifnames=0 root=/dev/mmcblk0p2 rauc.slot=A rootfstype=ext4 rootwait panic=10
+ota_version=Argus - Firmware v1.0.10 Build Date: Thu Sep 10 08:29:42 PM UTC 2026 
+cpus=4
+reps=3 niter=5000 scenarios=baseline,cpu,io,net,combined,crcfault
+spi_speed_hz=500000 (fixo em argus_bench.cpp)
+--- rauc ---
+head: invalid option -- '2'
+BusyBox v1.36.1 () multi-call binary.
+
+Usage: head [OPTIONS] [FILE]...
+--- mount / ---
+/dev/mmcblk0p2 on / type ext4 (ro,relatime)

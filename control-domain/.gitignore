@@ -1,0 +1,60 @@
+# editors
+.vscode
+*.swp
+*~
+
+# build
+/build*
+argus_*.bin
+/twister-out*
+
+__pycache__/
+
+# docs
+/doc/_build*
+
+# Zephyr Build Artifacts
+**/build/
+zephyr/
+.west/
+
+# Python virtual env
+.venv/
+venv/
+__pycache__/
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+
+# Logs e temporários
+*.log
+*~
+
+
+# boards/ contem a configuracao de placa DESTE projeto (overlays e
+# fragmentos de Kconfig) e precisa ser versionada.
+# O padrao antigo "boards/*" ignorava tudo silenciosamente.
+
+doc/*
+
+drivers/*
+
+dts/*
+
+lib/*
+
+scripts/*
+
+tests/*
+
+.github/*
+
+Kconfig
+
+# west.yml versionado de proposito: e o unico lugar que registra a
+# versao do Zephyr usada para gerar as imagens. Sem ele, reconstruir o
+# ambiente vira adivinhacao.
+
+LICENSE

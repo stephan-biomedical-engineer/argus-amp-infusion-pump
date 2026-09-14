@@ -1,0 +1,28 @@
+# ==========================================================
+# SEÇÃO 1: ACESSO LOCAL (Sua Aplicação C++/Boost interna)
+# ==========================================================
+# Como o listener local permite anônimos, as regras sem "user"
+# aplicam-se a quem conecta via localhost (127.0.0.1)
+# ----------------------------------------------------------
+
+# A bomba precisa LER comandos enviados pelo backend
+topic read bomba/comando
+
+# A bomba precisa ESCREVER o status dela
+topic write bomba/status
+
+# ==========================================================
+# SEÇÃO 2: ACESSO REMOTO (Backend via TLS/mTLS)
+# ==========================================================
+# Estas regras só valem quando o certificado "backend-service" é apresentado
+# ----------------------------------------------------------
+user backend-service
+
+# O Backend MANDA comandos (Write)
+topic readwrite bomba/comando
+
+# O Backend LÊ o status (Read)
+topic read bomba/status
+
+# O Backend NÃO PODE escrever em status (Segurança contra spoofing)
+# O Backend NÃO PODE ler comandos 

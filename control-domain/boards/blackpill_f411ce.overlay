@@ -1,0 +1,281 @@
+/ {
+    zephyr,user {
+        io-channels = <&adc1 1>, <&adc1 2>, <&adc1 3>;
+    };
+
+    chosen {
+        zephyr,code-partition = &slot0_partition;
+        zephyr,console = &usart1;
+        zephyr,shell-uart = &usart1;
+    };
+    
+    aliases {
+        led0 = &onboard_led;
+        
+        /* Sensores */
+        qdec0 = &qdec;         
+        sw-spdt = &button_spdt;
+        sw-mech = &button_mech;
+        sw-encoder = &button_encoder;
+        
+        /* ADC - Agora os labels &adc_photo existem! */
+        adc-photo = &adc_photo;
+        adc-pot = &adc_pot;
+        adc-load = &adc_load;
+
+        /* Atuadores */
+        motor-pwm = &motor_pwm;
+        motor-dir = &motor_dir;
+        motor-en = &motor_en;
+        led-ir = &pwm_ir;
+        buzzer = &buzzer_gpio; 
+        
+        /* Comms */
+        spi-ready = &ready_pin;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        onboard_led: led_pc13 {
+            gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+            label = "Onboard LED PC13";
+        };
+        ready_pin: ready_pin_pb0 {
+            gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>;
+            label = "SPI Ready Pin";
+        };
+    };
+
+    buttons {
+        compatible = "gpio-keys";
+        button_mech: microswitch {
+            gpios = <&gpiob 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            label = "Microswitch Limit";
+            zephyr,code = <11>; 
+        };
+        button_spdt: spdt_switch {
+            gpios = <&gpiob 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            label = "System Switch";
+            zephyr,code = <12>;
+        };
+        button_encoder: encoder_sw {
+            gpios = <&gpiob 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            label = "Encoder Button";
+            zephyr,code = <13>;
+        };
+    };
+
+    gpio_outputs {
+        compatible = "gpio-leds"; 
+        motor_dir: motor_dir {
+            gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;
+            label = "Motor Direction";
+        };
+        motor_en: motor_ena {
+            gpios = <&gpiob 14 GPIO_ACTIVE_HIGH>;
+            label = "Motor Enable";
+        };
+        buzzer_gpio: buzzer_gpio {
+            gpios = <&gpiob 6 GPIO_ACTIVE_HIGH>;
+            label = "Active Buzzer GPIO";
+        };
+    };
+
+    pwmleds {
+        compatible = "pwm-leds";
+        
+        pwm_ir: pwm_led_ir {
+            pwms = <&pwm2 1 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+            label = "IR LED";
+        };
+
+        motor_pwm: motor_pulse {
+            pwms = <&pwm4 4 PWM_USEC(1000) PWM_POLARITY_NORMAL>;
+            label = "Stepper Pulse PB9 (TIM4)";
+        };
+    };
+};
+
+/* --- Configuração do Timer 1 (Hardware Encoder) --- */
+&timers1 {
+    status = "okay";
+    
+    qdec: qdec {
+        compatible = "st,stm32-qdec";
+        status = "okay";
+        pinctrl-0 = <&tim1_ch1_pa8 &tim1_ch2_pa9>;
+        pinctrl-names = "default";
+        
+        st,encoder-mode = <3>; 
+        st,input-filter-level = <12>; 
+        st,counts-per-revolution = <80>;
+    };
+};
+
+/* --- Configuração dos Timers PWM --- */
+&timers2 {
+    status = "okay";
+    pwm2: pwm {
+        status = "okay";
+        pinctrl-0 = <&tim2_ch1_pwm_pa0>;
+        pinctrl-names = "default";
+    };
+};
+
+&timers4 {
+    status = "okay";
+    st,prescaler = <95>; /* Clock máximo para precisão */
+
+    pwm4: pwm {
+        status = "okay";
+        pinctrl-0 = <&tim4_ch4_pwm_pb9>; /* Aponta para a nova config AF2 */
+        pinctrl-names = "default";
+    };
+};
+
+/* --- Configuração ADC (CORRIGIDA) --- */
+&adc1 {
+    status = "okay";
+    pinctrl-0 = <&adc1_in1_pa1 &adc1_in2_pa2 &adc1_in3_pa3>;
+    pinctrl-names = "default";
+    st,adc-clock-source = "SYNC";   /* binding virou string no Zephyr 4.x (era <SYNC>) */
+    st,adc-prescaler = <4>;
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    /* ADICIONADO: Labels para os canais */
+    adc_photo: channel@1 {
+        reg = <1>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+    };
+    adc_pot: channel@2 {
+        reg = <2>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+    };
+    adc_load: channel@3 {
+        reg = <3>;
+        zephyr,gain = "ADC_GAIN_1";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+    };
+};
+
+/* --- Pin Control (Muxing) --- */
+&pinctrl {
+    /* SPI1 */
+    spi1_sck_pa5: spi1_sck_pa5 {
+        pinmux = <STM32_PINMUX('A', 5, AF5)>;
+        bias-pull-up; 
+    };
+    spi1_miso_pa6: spi1_miso_pa6 {
+        pinmux = <STM32_PINMUX('A', 6, AF5)>;
+        bias-pull-down;
+    };
+    spi1_mosi_pa7: spi1_mosi_pa7 {
+        pinmux = <STM32_PINMUX('A', 7, AF5)>;
+        bias-pull-up;
+    };
+    spi1_nss_pa4: spi1_nss_pa4 {
+         pinmux = <STM32_PINMUX('A', 4, AF5)>;
+         bias-pull-up;
+    };
+
+    /* ADC */
+    adc1_in1_pa1: adc1_in1_pa1 { pinmux = <STM32_PINMUX('A', 1, ANALOG)>; };
+    adc1_in2_pa2: adc1_in2_pa2 { pinmux = <STM32_PINMUX('A', 2, ANALOG)>; };
+    adc1_in3_pa3: adc1_in3_pa3 { pinmux = <STM32_PINMUX('A', 3, ANALOG)>; };
+
+    /* PWM Timers */
+    tim2_ch1_pwm_pa0: tim2_ch1_pwm_pa0 {
+        pinmux = <STM32_PINMUX('A', 0, AF1)>;
+    };
+    tim4_ch4_pwm_pb9: tim4_ch4_pwm_pb9 {
+        pinmux = <STM32_PINMUX('B', 9, AF2)>; /* AF2 = TIM4_CH4 */
+        bias-pull-down; /* Garante 0V quando desligado */
+        drive-push-pull;
+        slew-rate = "very-high-speed"; /* Bom para PWM rápido */
+    };
+    
+    /* Hardware Encoder Timer 1 (PA8 e PA9) */
+    tim1_ch1_pa8: tim1_ch1_pa8 {
+        pinmux = <STM32_PINMUX('A', 8, AF1)>;
+        bias-pull-up;
+    };
+    tim1_ch2_pa9: tim1_ch2_pa9 {
+        pinmux = <STM32_PINMUX('A', 9, AF1)>;
+        bias-pull-up;
+    };
+
+    usart1_tx_pa15: usart1_tx_pa15 {
+        pinmux = <STM32_PINMUX('A', 15, AF7)>;
+        bias-pull-up;
+    };
+
+    /* Configura PA10 como USART1_RX (AF7) */
+    usart1_rx_pa10: usart1_rx_pa10 {
+        pinmux = <STM32_PINMUX('A', 10, AF7)>;
+        bias-pull-up;
+    };
+};
+
+/* --- Configurações Flash e Periféricos --- */
+&flash0 {
+    /delete-node/ partitions;
+};
+
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+        boot_partition: partition@0 {
+            label = "mcuboot";
+            reg = <0x00000000 0x00020000>; 
+        };
+        slot0_partition: partition@20000 {
+            label = "image-0";
+            reg = <0x00020000 0x00020000>; 
+        };
+        slot1_partition: partition@40000 {
+            label = "image-1";
+            reg = <0x00040000 0x00020000>; 
+        };
+        scratch_partition: partition@60000 {
+            label = "image-scratch";
+            reg = <0x00060000 0x00020000>; 
+        };
+    };
+};
+
+&dma2 { status = "okay"; };
+
+&spi1 {
+    status = "okay";
+    pinctrl-0 = <&spi1_sck_pa5 &spi1_miso_pa6 &spi1_mosi_pa7 &spi1_nss_pa4>;
+    pinctrl-names = "default";
+    dmas = <&dma2 3 3 0x28440 0x03>, <&dma2 0 3 0x28480 0x03>;
+    dma-names = "tx", "rx";
+};
+
+/* Configuração do Periférico USART1 */
+&usart1 {
+    status = "okay";
+    pinctrl-0 = <&usart1_tx_pa15 &usart1_rx_pa10>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+};
+
+/* Desativa periféricos não usados */
+&i2c1 { status = "disabled"; };
+&i2c2 { status = "disabled"; };
+&i2c3 { status = "disabled"; };
+&usart2 { status = "disabled"; };
+&usart6 { status = "disabled"; };
+&timers11 { status = "disabled"; };

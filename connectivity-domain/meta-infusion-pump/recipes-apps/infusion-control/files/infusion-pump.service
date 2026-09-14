@@ -1,0 +1,25 @@
+[Unit]
+Description=Servico de Controle da Bomba de Infusao (C++ Nativo)
+# Mantemos o After/Requires: O firmware C++ falharia se o Mosquitto não estivesse pronto
+After=network.target mosquitto.service
+Requires=mosquitto.service
+
+[Service]
+Type=notify
+
+# ALTERAMOS: Executamos o binário diretamente
+ExecStart=/usr/bin/infusion-pump-app
+
+# Se o C++ der um "segmentation fault" ou crashar, o systemd levanta ele em 5s
+Restart=always
+RestartSec=5
+
+# Acesso ao hardware
+User=root
+Group=root
+
+# Watchdog habilitado
+WatchdogSec=10
+
+[Install]
+WantedBy=multi-user.target

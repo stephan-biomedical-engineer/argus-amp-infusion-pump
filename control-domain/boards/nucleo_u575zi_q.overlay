@@ -1,0 +1,256 @@
+/*
+ * Argus MPCS - Nucleo-U575ZI-Q (STM32U575ZIT6Q, Cortex-M33)
+ *
+ * Perfil MINIMO. So o necessario para o gateway (RPi Zero 2W) falar com
+ * o MCU, mais o atuador e a UART de debug:
+ *
+ *   [obrigatorio] SPI1 escravo + pino DATA READY
+ *   [opcional]    PWM do motor de passo + DIR/EN
+ *   [debug]       console/log pela VCP do ST-Link
+ *
+ * Encoder (qdec), ADC, botoes e buzzer NAO sao instanciados. Os drivers
+ * correspondentes viram stubs sozinhos quando os nos faltam no DT --
+ * vale tambem para o motor (ver src/motor_driver.c).
+ *
+ * ---------------------------------------------------------------------
+ * MAPA DE PINOS -- CONFIRME contra o pinout da placa antes de ligar
+ * ---------------------------------------------------------------------
+ *   SPI1 (escravo)   NSS  PA4   CN7-9  ou CN7-17   (Zio D20/D24)
+ *                    SCK  PA5   CN7-10             (Arduino D13)
+ *                    MISO PA6   CN7-12             (Arduino D12)
+ *                    MOSI PA7   CN7-14             (Arduino D11)
+ *   DATA READY (out) PB3   CN7-15             (Zio D23)
+ *                          -> GPIO 5 do RPi (entrada)
+ *
+ *   PB3 fica no MESMO conector dos quatro sinais de SPI (CN7), o que
+ *   encurta a fiacao. Em troca, PB3 e a funcao debug_jtdo_swo: com SWD
+ *   puro fica livre para GPIO, mas se o trace SWO for habilitado no
+ *   ST-Link o pino deixa de responder. Alternativa sem esse risco e
+ *   PA2 (CN9-3 / CN10-13, Arduino A1), do outro lado da placa.
+ *
+ *   CUIDADO: o Arduino D10 desta placa NAO e PA4, e PD14 -- que e
+ *   justamente o cs-gpios de mestre que este overlay apaga. Ligar o CS
+ *   da Raspberry em D10 nao funciona.
+ *   MOTOR PWM        PA0   TIM2_CH1   [opcional]
+ *   MOTOR DIR (out)  PB13             [opcional]
+ *   MOTOR EN  (out)  PB14             [opcional]
+ *
+ * ---------------------------------------------------------------------
+ * NOTA sobre o RDY em hardware
+ * ---------------------------------------------------------------------
+ * PA2 (nao usado agora) e o pino de funcao alternada SPI1_RDY do U5: o IP de SPI da
+ * geracao nova sabe dirigir esse sinal sozinho (SPI_CFG2.RDIOM/RDIOP),
+ * sem passar por software. Isso e melhor que o que fazemos hoje -- ver
+ * a discussao no README -- mas o driver spi_stm32 do Zephyr nao expoe
+ * essa configuracao, e ele reprograma CFG2 no caminho de transceive.
+ *
+ * Por isso o DATA READY e um GPIO comum dirigido por software em hub.c,
+ * igual a Blackpill. Assim o comportamento e o mesmo
+ * nas duas placas e os resultados continuam comparaveis.
+ *
+ * ---------------------------------------------------------------------
+ * UART DE DEBUG
+ * ---------------------------------------------------------------------
+ * O console e os logs saem pela VCP do ST-Link, que a DTS da propria
+ * board ja escolhe (zephyr,console / zephyr,shell-uart). Nao ha nada a
+ * declarar aqui e nao gasta pino de header: basta plugar o USB da
+ * Nucleo e abrir /dev/ttyACM0 a 115200.
+ *
+ *     west build -b nucleo_u575zi_q . && west flash
+ *     picocom -b 115200 /dev/ttyACM0        # ou screen, minicom...
+ *
+ * Se quiser o log num adaptador USB-serial separado (por exemplo para
+ * capturar com o analisador logico ao mesmo tempo), descomente o bloco
+ * "console alternativo" no fim deste arquivo e confira antes se os
+ * pinos escolhidos estao livres na sua placa.
+ */
+
+/ {
+    chosen {
+        /*
+         * Com MCUboot, a aplicacao TEM de ser linkada no slot0 -- senao
+         * fica no inicio da flash, onde mora o bootloader.
+         * O layout (mcuboot 64K, slot0 928K @0x10000, slot1 928K
+         * @0xf8000) vem da propria board DTS.
+         */
+        zephyr,code-partition = &slot0_partition;
+    };
+
+    aliases {
+        /* Comms -- obrigatorio */
+        spi-ready = &ready_pin;
+
+        /* Atuadores -- opcional (some junto com o bloco do motor) */
+        motor-pwm = &motor_pwm;
+        motor-dir = &motor_dir;
+        motor-en  = &motor_en;
+
+        /* Marcadores para o analisador logico -- ver include/markers.h */
+        la-marker-a = &marker_a;
+        la-marker-b = &marker_b;
+    };
+
+    gpio_outputs {
+        compatible = "gpio-leds";
+
+        /* DATA READY: GPIO comum dirigido por software em hub.c. */
+        ready_pin: ready_pin_pb3 {
+            gpios = <&gpiob 3 GPIO_ACTIVE_HIGH>;
+            label = "SPI Data Ready";
+        };
+
+        /* --- inicio do bloco opcional do motor --- */
+        motor_dir: motor_dir {
+            gpios = <&gpiob 13 GPIO_ACTIVE_HIGH>;
+            label = "Motor Direction";
+        };
+        motor_en: motor_ena {
+            gpios = <&gpiob 14 GPIO_ACTIVE_HIGH>;
+            label = "Motor Enable";
+        };
+    };
+
+    /*
+     * --- Marcadores para o analisador logico --- [opcional]
+     *
+     * Pinos livres na placa: nem os LEDs (PC7, PB7, PG2), nem o botao
+     * (PC13), nem o I2C (PB8/PB9, PF0/PF1) os reivindicam.
+     *
+     *   A = PA8 -> Zio D33 (CN10-31)
+     *   B = PE0 -> Zio D34 (CN10-33)
+     *
+     * Removendo este bloco e os dois aliases, o firmware volta a compilar
+     * sem marcador nenhum, sem mais nenhuma edicao.
+     */
+    la_markers {
+        compatible = "gpio-leds";
+
+        marker_a: marker_a_pa8 {
+            gpios = <&gpioa 8 GPIO_ACTIVE_HIGH>;
+            label = "LA Marker A (quadro decodificado)";
+        };
+        marker_b: marker_b_pe0 {
+            gpios = <&gpioe 0 GPIO_ACTIVE_HIGH>;
+            label = "LA Marker B (atuacao no motor)";
+        };
+    };
+
+    pwmleds {
+        compatible = "pwm-leds";
+
+        motor_pwm: motor_pulse {
+            pwms = <&pwm2 1 PWM_USEC(1000) PWM_POLARITY_NORMAL>;
+            label = "Stepper Pulse PA0 (TIM2_CH1)";
+        };
+    };
+    /* --- fim do bloco opcional do motor --- */
+};
+
+/*
+ * --- PWM do motor de passo: TIM2 canal 1 --- [opcional]
+ *
+ * O prescaler assume 160 MHz de clock no TIM2. Se rodar o U575 em outra
+ * frequencia, recalcule: valor = (f_timer / 1 MHz) - 1.
+ *
+ * Para um build so de comunicacao, remova este bloco, o bloco do motor
+ * acima e os tres aliases motor-*. motor_driver.c passa a compilar como
+ * stub sozinho, sem mais nenhuma edicao.
+ */
+&timers2 {
+    status = "okay";
+    st,prescaler = <159>;   /* 160 MHz / (159+1) = 1 MHz -> 1 us de resolucao */
+
+    pwm2: pwm {
+        status = "okay";
+        pinctrl-0 = <&tim2_ch1_pa0>;
+        pinctrl-names = "default";
+    };
+};
+
+/*
+ * --- SPI1 em modo ESCRAVO --- [obrigatorio]
+ *
+ * COM DMA (GPDMA1). A versao anterior deste comentario afirmava que
+ * 500 kHz com quadros de 64 bytes eram "atendidos com folga em modo
+ * interrupcao". A medicao desmentiu: em modo interrupcao o escravo nao
+ * repoe a FIFO a tempo e transmite zeros depois dos 8 primeiros bytes.
+ *
+ * Medido em 12/09/2026, quadros recusados pelo gateway por CRC:
+ *     100 kHz -> 0,00%   500 kHz -> ~0,8%   2 MHz -> 94%
+ * e 477 erros de driver com 477 resets do periferico em 15.913 quadros.
+ *
+ * DMA NAO E POSSIVEL AQUI, e a razao nao e configuracao. O driver do
+ * Zephyr recusa explicitamente:
+ *
+ *     <err> spi_stm32: SPI DMA is only supported for full-duplex
+ *                      controller mode
+ *     <err> hub: Erro SPI Driver: -134   (-ENOTSUP)
+ *
+ * Testado em 12/09/2026 com o mapeamento correto (gpdma1 habilitado pela
+ * propria DTS da placa, SPI1_TX = 7 e SPI1_RX = 6 conforme o HAL): toda
+ * transferencia retornou -ENOTSUP, o hub resetou o periferico e o
+ * firmware reiniciou sozinho apos 10 erros seguidos.
+ *
+ * Consequencia: em modo ESCRAVO a alimentacao da FIFO e sempre por CPU, e
+ * a taxa util fica limitada pelo atendimento da interrupcao. Medido:
+ *     100 kHz -> 0,00% de quadros recusados
+ *     500 kHz -> 0,5% a 1,3% (cadencia de consulta continua)
+ *     500 kHz -> 0,00% na cadencia das campanhas (modo mix)
+ *     2 MHz   -> 94%
+ */
+&spi1 {
+    status = "okay";
+
+    /*
+     * A board DTS declara este SPI como MESTRE, com CS por GPIO em PD14
+     * e sem NSS no pinctrl. Em modo escravo isso esta errado nos dois
+     * pontos, entao aqui: apagamos cs-gpios e reescrevemos o pinctrl
+     * incluindo NSS por hardware em PA4.
+     */
+    /delete-property/ cs-gpios;
+
+    pinctrl-0 = <&spi1_nss_pa4 &spi1_sck_pa5 &spi1_miso_pa6 &spi1_mosi_pa7>;
+
+
+    pinctrl-names = "default";
+};
+
+/*
+ * --- CONFLITO DE PINO: DAC1 x SPI1_NSS ---
+ *
+ * A board DTS habilita o DAC1 com pinctrl-0 = <&dac1_out1_pa4>, ou seja
+ * reivindica PA4 como saida ANALOGICA. Nosso SPI1 quer o mesmo PA4 como
+ * AF5 (SPI1_NSS). Dois drivers configurando o mesmo pino: quem
+ * inicializar por ultimo vence, e se for o DAC o PA4 fica analogico e o
+ * NSS por hardware nunca responde.
+ *
+ * Nao usamos DAC neste perfil, entao o caminho limpo e desliga-lo.
+ */
+&dac1 {
+    status = "disabled";
+};
+
+/*
+ * Particoes de flash: NAO redefinidas aqui.
+ * (O chosen zephyr,code-partition acima usa o slot0 desse layout.)
+ *
+ * A propria board DTS ja traz um layout melhor que o que eu havia
+ * escrito (boot 64K, slot0 928K @0x10000, slot1 928K @0xf8000,
+ * storage 128K) e ja aponta zephyr,code-partition para slot0.
+ * Sem MCUboot esse chosen e ignorado (depende de
+ * CONFIG_USE_DT_CODE_PARTITION), entao a aplicacao linka no inicio da
+ * flash e da boot direto. Ao ligar MCUboot, o layout ja esta pronto.
+ */
+
+/*
+ * ---------------------------------------------------------------------
+ * Console
+ * ---------------------------------------------------------------------
+ * Nada a declarar. A board DTS ja faz:
+ *
+ *     chosen { zephyr,console = &usart1; zephyr,shell-uart = &usart1; };
+ *     &usart1 { pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>; ... };
+ *
+ * e USART1 (PA9/PA10) e a Virtual COM Port do ST-Link, 115200 8N1,
+ * conforme a documentacao da placa. Basta o cabo USB.
+ */

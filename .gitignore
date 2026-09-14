@@ -1,0 +1,22 @@
+# Artefatos de build
+build/
+*.o
+*.a
+
+# Saidas geradas (o pipeline as reconstroi)
+measurements/figures/saida/
+node_modules/
+
+# Configuracao e segredos desta maquina
+local.env
+backend_certs/
+*.key
+*.pem
+!connectivity-domain/meta-infusion-pump/recipes-core/bundles/files/.gitkeep
+
+# Editor
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+*.swp

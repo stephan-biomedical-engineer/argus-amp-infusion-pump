@@ -1,0 +1,10 @@
+# =============================================================================
+# Argus MCPS — Build do Bundle OTA (RAUC)
+# Uso: kas-container build kas/bundle.yml
+# =============================================================================
+header:
+  version: 14
+  includes:
+    - kas/base.yml
+
+target: infusion-bundle

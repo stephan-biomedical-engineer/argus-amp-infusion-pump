@@ -1,0 +1,14 @@
+label,metrica,valor
+cpu,frames_seen,5050
+cpu,crc_errors,0
+cpu,driver_errors,2
+cpu,spi_resets,2
+cpu,recoveries,0
+cpu,max_recovery_us,0
+cpu,cmd_count,3125
+cpu,cmd_lat_max_us,125
+cpu,cmd_lat_avg_us,82
+cpu,loop_count,2
+cpu,loop_period_min_us,100196
+cpu,loop_period_max_us,100235
+cpu,deadline_misses,0

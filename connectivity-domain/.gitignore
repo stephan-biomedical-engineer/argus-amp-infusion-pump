@@ -1,0 +1,68 @@
+# =============================================================================
+# Argus MCPS — .gitignore
+# =============================================================================
+
+# --- Artefatos de build (Kas / Yocto) ---
+build/
+
+# --- Config desta maquina (caches em disco externo) ---
+# Versionado como local.env
+.cache-fingerprint.example; o local.env
+.cache-fingerprint real e por maquina.
+local.env
+.cache-fingerprint
+
+# --- Repos gerenciados pelo Kas (não precisa mais de submodules) ---
+poky/
+meta-raspberrypi/
+meta-openembedded/
+meta-rauc/
+
+# --- Certificados e chaves (gerados por generate_dev_certs.sh) ---
+meta-infusion-pump/recipes-connectivity/mosquitto/files/certs/
+meta-infusion-pump/recipes-core/bundles/files/*.pem
+meta-infusion-pump/recipes-support/rauc/files/keyring.pem
+backend_certs/
+
+# --- Build intermediário do C++ ---
+meta-infusion-pump/recipes-apps/infusion-control/files/src/build/
+
+# --- Binarios do build local com SDK (nao podem ir para o git nem
+#     sobrar no diretorio de fontes quando o Yocto builda a receita) ---
+meta-infusion-pump/recipes-apps/infusion-control/files/src/infusion-pump-app
+meta-infusion-pump/recipes-apps/infusion-control/files/src/stm32-updater
+meta-infusion-pump/recipes-apps/infusion-control/files/src/argus-bench
+meta-infusion-pump/recipes-apps/infusion-control/files/src/argus-attack
+meta-infusion-pump/recipes-apps/infusion-control/files/src/libinfusion_core.a
+
+# --- Binarios cross-compilados do harness de medicao ---
+meta-infusion-pump/recipes-apps/infusion-control/files/src/argus-bench-armv7
+
+# --- Firmwares de teste ---
+test_firmware/
+
+# --- Temporários de editor/IDE ---
+__pycache__/
+*.pyc
+.vscode/
+*.swp
+*~
+.idea/
+
+# --- Yocto/BitBake ---
+bitbake.lock
+pseudodone
+toaster.sqlite
+toaster_ui.log
+
+# --- Manter pastas vazias no git ---
+!meta-infusion-pump/recipes-connectivity/mosquitto/files/certs/.gitkeep
+!meta-infusion-pump/recipes-core/bundles/files/.gitkeep
+!meta-infusion-pump/recipes-support/rauc/files/.gitkeep
+
+# --- Credenciais de rede desta maquina (gabarito versionado: *.conf-sane) ---
+meta-infusion-pump/recipes-connectivity/wpa-supplicant/files/wpa_supplicant.conf-local
+
+# --- Rede de seguranca: nenhuma chave solta na raiz da layer ---
+meta-infusion-pump/*.key
+meta-infusion-pump/*.pem

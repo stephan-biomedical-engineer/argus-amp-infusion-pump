@@ -1,0 +1,33 @@
+# Manifesto do workspace Zephyr usado para gerar as imagens deste
+# firmware. Versionado de proposito: sem ele, reconstruir o ambiente
+# vira adivinhacao.
+#
+# Ambiente validado em 2026-09-07:
+#   Zephyr    v4.4.0-14505-gbc2caf20dd0
+#   SDK       zephyr-sdk 1.0.1 (toolchain arm-zephyr-eabi)
+#   libc      picolibc (o SDK nao traz mais newlib para arm-zephyr-eabi)
+#
+# Uso como workspace proprio:
+#   west init -l .            # a partir da raiz deste repositorio
+#   west update
+manifest:
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: bc2caf20dd0c7ca6c95c0dae66fd1ccb0e7e6147
+      import:
+        name-allowlist:
+          - cmsis
+          - cmsis_6
+          - hal_stm32
+          - mcuboot
+          - picolibc
+          - segger
+          - zcbor
+
+  self:
+    path: argus-mpcs

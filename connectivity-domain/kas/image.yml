@@ -1,0 +1,10 @@
+# =============================================================================
+# Argus MCPS — Build da Imagem SD Card
+# Uso: kas-container build kas/image.yml
+# =============================================================================
+header:
+  version: 14
+  includes:
+    - kas/base.yml
+
+target: infusion-image

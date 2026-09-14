@@ -1,0 +1,23 @@
+# =============================================================================
+# GABARITO -- nao coloque credenciais reais neste arquivo.
+# =============================================================================
+# Este arquivo e versionado. As redes de verdade vao em
+#   files/wpa_supplicant.conf-local
+# que o .gitignore cobre e que o bbappend instala quando existe.
+#
+# Depois de editar o -local, rode:
+#   ./build.sh shell  ->  bitbake -c cleansstate wpa-supplicant
+# senao o sstate reaproveita a instalacao anterior.
+# =============================================================================
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
+update_config=1
+
+network={
+    ssid="NOME_DA_REDE"
+    psk="SENHA_DA_REDE"
+    proto=RSN
+    key_mgmt=WPA-PSK
+    pairwise=CCMP
+    auth_alg=OPEN
+}

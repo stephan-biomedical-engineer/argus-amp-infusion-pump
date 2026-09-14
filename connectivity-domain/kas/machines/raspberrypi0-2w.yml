@@ -1,0 +1,13 @@
+header:
+  version: 14
+  includes:
+    - ../base.yml
+
+machine: raspberrypi0-2w
+
+local_conf_header:
+  kernel_rpi02w: |
+    KERNEL_DEVICETREE = " \
+        bcm2710-rpi-zero-2.dtb \
+        bcm2710-rpi-zero-2-w.dtb \
+    "

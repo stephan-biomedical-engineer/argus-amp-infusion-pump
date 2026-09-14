@@ -1,0 +1,15 @@
+=============================================================
+ Welcome to compile environment of Infusion Pump Argus MCPS!
+=============================================================
+
+ You can run bitbake now for build image 
+
+ Common targets:
+    bitbake infusion-image    (SD Card Image)
+    bitbake infusion-bundle   (OTA/RAUC update package)
+
+ To compile control daemon (C++) standalone:
+    bitbake argus-control-cpp
+
+ Security Note: Check the certify 
+ mTLS and RAUC keys was generated before the build!

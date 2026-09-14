@@ -1,0 +1,13 @@
+header:
+  version: 14
+  includes:
+    - ../base.yml
+
+machine: raspberrypi3
+
+local_conf_header:
+  kernel_rpi3: |
+    KERNEL_DEVICETREE = " \
+        bcm2710-rpi-3-b.dtb \
+        bcm2710-rpi-3-b-plus.dtb \
+    "

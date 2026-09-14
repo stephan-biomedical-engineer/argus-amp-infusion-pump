@@ -1,0 +1,30 @@
+[SPI] Barramento reinicializado: /dev/spidev0.1
+
+=== E7 — Replay de quadro valido ===
+    esperado: quadro reenviado deve ser rejeitado (exige nonce/contador)
+    quadro capturado: 18 bytes, CRC valido
+    reenvios: 20 | aceitos: 20
+    RESULTADO: DEFESA FALHOU — protocolo SEM protecao contra replay -- quadro capturado e reaceito indefinidamente
+
+=== E8 — Quadro forjado com CRC valido ===
+    esperado: quadro nao autenticado deve ser rejeitado (exige MAC/assinatura)
+    quadro forjado: 9 bytes, CRC calculado sem chave nenhuma
+    RESULTADO: DEFESA FALHOU — quadro forjado ACEITO -- CRC-16 detecta erro, nao autentica origem
+
+=== E9 — Perda e atraso de quadro ===
+    esperado: MCU descarta o parcial e volta a aceitar o proximo quadro valido
+    truncamentos: 10 | recuperados: 10 | tempo medio: 2823.4 us
+    RESULTADO: DEFESA SEGUROU — recuperacao integral apos quadro parcial
+
+=== E13 — Comando de vazao fora da janela terapeutica ===
+    esperado: MCU rejeita ou satura; a vazao efetiva nunca atinge o pedido
+    pedido    600 mL/h -> efetivo    600 mL/h  [ACEITO]
+    pedido   1200 mL/h -> efetivo   1200 mL/h  [ACEITO]
+    pedido   5000 mL/h -> efetivo   1200 mL/h  [CONTIDO]
+    pedido  65000 mL/h -> efetivo   1200 mL/h  [CONTIDO]
+    RESULTADO: DEFESA SEGUROU — MCU limitou pelo menos um pedido excessivo
+
+=== E14 pulado (use --with-reset para executar) ===
+
+resultados em /data/bench-p3v2/ataques.csv
+[SPI] Device fechado.

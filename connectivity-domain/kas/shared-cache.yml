@@ -1,0 +1,35 @@
+# =============================================================================
+# Argus MCPS — reuso SOMENTE LEITURA do cache de outro projeto Yocto
+# =============================================================================
+# Incluido automaticamente pelo build.sh quando local.env define
+# SHARED_RO_DL / SHARED_RO_SSTATE.
+#
+# Os caminhos abaixo sao do INTERIOR do container: o build.sh monta os
+# diretorios do outro projeto com a flag :ro do Docker. Isso nao e
+# convencao, e o kernel -- escrita falha com EROFS mesmo para root, mesmo
+# num rm -rf.
+#
+# Fluxo resultante:
+#   ler   -> primeiro o cache alheio (:ro), depois a rede
+#   gravar-> sempre no DL_DIR / SSTATE_DIR proprios do Argus
+#
+# Nenhum comando de limpeza do kas alcanca um mirror.
+# =============================================================================
+header:
+  version: 14
+
+local_conf_header:
+
+  shared_ro_cache: |
+    # sstate do outro projeto como espelho de leitura.
+    # "PATH" e literal: o bitbake substitui pela hierarquia do objeto.
+    SSTATE_MIRRORS ?= "file://.* file:///sstate-ro/PATH"
+
+    # downloads do outro projeto como pre-mirror de fontes.
+    # own-mirrors procura em SOURCE_MIRROR_URL antes de ir a rede; o que
+    # nao estiver la e baixado normalmente para o DL_DIR do Argus.
+    INHERIT += "own-mirrors"
+    SOURCE_MIRROR_URL ?= "file:///downloads-ro"
+
+    # Nao gerar tarball de mirror: so consumimos, nao publicamos.
+    BB_GENERATE_MIRROR_TARBALLS ?= "0"

@@ -1,0 +1,379 @@
+[bench] cenario=baseline cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/baseline_rep1_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100096..100102]us cmd_wcet=124us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=baseline cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/baseline_rep2_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100075..100254]us cmd_wcet=125us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=baseline cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/baseline_rep3_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100118..100261]us cmd_wcet=125us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=cpu cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[BRIDGE] Erro de Checksum na resposta (SOF achado em 0)
+[bench] metricas do MCU -> /data/bench-p3v2/cpu_rep1_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100095..100254]us cmd_wcet=125us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=cpu cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/cpu_rep2_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100196..100235]us cmd_wcet=125us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=cpu cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[BRIDGE] Erro de Checksum na resposta (SOF achado em 0)
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x11
+[bench] metricas do MCU -> /data/bench-p3v2/cpu_rep3_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100040..100239]us cmd_wcet=127us
+[bench] 5000 transacoes, 1 falhas (0.02%)
+[bench] cenario=io cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[BRIDGE] Erro de Checksum na resposta (SOF achado em 0)
+[bench] metricas do MCU -> /data/bench-p3v2/io_rep1_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100064..100104]us cmd_wcet=127us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=io cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/io_rep2_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100077..100101]us cmd_wcet=127us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=io cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/io_rep3_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100085..100135]us cmd_wcet=129us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=net cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/net_rep1_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100092..100264]us cmd_wcet=124us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=net cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[BRIDGE] Resposta fora de sincronia: esperado 0x31, recebido 0x4
+[bench] AVISO: nao foi possivel ler metricas do MCU
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=net cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/net_rep3_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100085..100248]us cmd_wcet=127us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=combined cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/combined_rep1_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100042..100265]us cmd_wcet=125us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=combined cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/combined_rep2_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100075..100084]us cmd_wcet=125us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=combined cmd=mix n=5000 warmup=50 intervalo=0us falha=1/0
+[bench] metricas do MCU -> /data/bench-p3v2/combined_rep3_mcu.csv
+[bench]   crc_errors=0 recoveries=0 max_recovery=0us deadline_misses=0 loop[100041..100282]us cmd_wcet=125us
+[bench] 5000 transacoes, 0 falhas (0.00%)
+[bench] cenario=crcfault cmd=mix n=5000 warmup=50 intervalo=0us falha=1/50
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[bench] metricas do MCU -> /data/bench-p3v2/crcfault_rep1_mcu.csv
+[bench]   crc_errors=101 recoveries=101 max_recovery=69892us deadline_misses=0 loop[100070..100100]us cmd_wcet=127us
+[bench] 5000 transacoes, 100 falhas (2.00%)
+[bench] cenario=crcfault cmd=mix n=5000 warmup=50 intervalo=0us falha=1/50
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[bench] metricas do MCU -> /data/bench-p3v2/crcfault_rep2_mcu.csv
+[bench]   crc_errors=101 recoveries=101 max_recovery=66577us deadline_misses=0 loop[100134..100134]us cmd_wcet=129us
+[bench] 5000 transacoes, 100 falhas (2.00%)
+[bench] cenario=crcfault cmd=mix n=5000 warmup=50 intervalo=0us falha=1/50
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f
+[bench] metricas do MCU -> /data/bench-p3v2/crcfault_rep3_mcu.csv
+[bench]   crc_errors=101 recoveries=101 max_recovery=49554us deadline_misses=0 loop[100098..100131]us cmd_wcet=129us
+[bench] 5000 transacoes, 100 falhas (2.00%)

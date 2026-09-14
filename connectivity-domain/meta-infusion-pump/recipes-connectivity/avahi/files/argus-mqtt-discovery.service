@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+  <name replace-wildcards="yes">Argus MCPS (Broker TLS)</name>
+  <service>
+    <type>_mqtt._tcp</type>
+    <port>8883</port>
+    <txt-record>model=Argus-MCPS</txt-record>
+    <txt-record>security=mTLS</txt-record>
+  </service>
+</service-group>
