@@ -1,0 +1,6 @@
+experimento,metrica,valor
+E9,truncamentos,10.000
+E9,recuperados,7.000
+E9,tempo_recuperacao_medio_us,2806.555
+E9,defesa_segurou,0
+E9,observacao,houve perda de sincronia persistente

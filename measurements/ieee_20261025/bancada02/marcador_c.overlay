@@ -1,0 +1,20 @@
+/*
+ * Bancada 02 -- marcador C (periodo do laco do logic_engine).
+ * Usado so no build de bancada:
+ *   west build ... -- -DEXTRA_DTC_OVERLAY_FILE=<este arquivo>
+ * PD15 = Zio D9, CN7-18 (st_zio_connector.dtsi da placa). Livre neste
+ * projeto: nao e LED, botao, I2C, nem o SPI1 do overlay (PA4..PA7).
+ */
+/ {
+    aliases {
+        la-marker-c = &marker_c;
+    };
+
+    la_marker_c {
+        compatible = "gpio-leds";
+        marker_c: marker_c_pd15 {
+            gpios = <&gpiod 15 GPIO_ACTIVE_HIGH>;
+            label = "LA Marker C (periodo do laco)";
+        };
+    };
+};

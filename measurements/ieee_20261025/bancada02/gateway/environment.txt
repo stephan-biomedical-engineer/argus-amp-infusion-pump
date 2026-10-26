@@ -1,0 +1,9 @@
+data=2026-10-25T12:54:49-0300
+gateway_modelo=Raspberry Pi 3 Model B Plus Rev 1.3  cpus=4
+mcu_placa=nucleo_u575zi_q mcu_clock_hz=160000000
+mcu_firmware=v1.1.23 commit 5dd34d1 (bancada 01)
+ferramentas=4f190acb526fb5bf703dae16baae657c  /data/bancada01/bin/argus-attack b61314bba46e1c25c530fbfc972c49e7  /data/bancada01/bin/argus-bench fc8e230ebcdbf48447ccbe064b8cb4ef  /data/bancada01/bin/argus-versao 
+stress-ng=/usr/bin/stress-ng iperf3=/usr/bin/iperf3 iperf_bw=100M
+kernel=Linux raspberrypi3 6.1.77-v7 #1 SMP Thu Feb  8 15:07:10 UTC 2024 armv7l GNU/Linux
+spi_hz=500000
+spi_hz_servico=500000

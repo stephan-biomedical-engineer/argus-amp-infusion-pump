@@ -1,0 +1,12 @@
+seq,label,cmd,t_rel_us,latency_us,ok,cmd_id
+0,sem-rotulo,status,1.042,3008.646,0,0x03
+1,sem-rotulo,status,3010.469,3079.271,0,0x03
+2,sem-rotulo,status,6090.521,12586.510,0,0x03
+3,sem-rotulo,status,18677.813,2947.500,0,0x03
+4,sem-rotulo,status,21625.625,2922.031,0,0x03
+5,sem-rotulo,status,24548.021,2948.802,0,0x03
+6,sem-rotulo,status,27497.135,3079.636,0,0x03
+7,sem-rotulo,status,30577.552,3106.823,0,0x03
+8,sem-rotulo,status,33685.208,3109.740,0,0x03
+9,sem-rotulo,status,36795.729,3104.115,0,0x03
+10,sem-rotulo,status,39900.625,2960.573,0,0x03

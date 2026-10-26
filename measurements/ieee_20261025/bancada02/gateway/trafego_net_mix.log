@@ -1,0 +1,4 @@
+[SPI] Barramento reinicializado: /dev/spidev0.1
+[bench] cenario=sem-rotulo cmd=mix n=10000000 warmup=50 intervalo=2000us falha=1/0 spi=500000Hz
+[bench] infusao continua a 600 mL/h: config=ok run=ok
+[BRIDGE] Resposta fora de sincronia: esperado 0x4, recebido 0x2f

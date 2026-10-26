@@ -1,0 +1,14 @@
+label,metrica,valor
+baseline,frames_seen,2051
+baseline,crc_errors,0
+baseline,driver_errors,1
+baseline,spi_resets,1
+baseline,recoveries,0
+baseline,max_recovery_us,0
+baseline,cmd_count,1250
+baseline,cmd_lat_max_us,126
+baseline,cmd_lat_avg_us,83
+baseline,loop_count,13
+baseline,loop_period_min_us,100095
+baseline,loop_period_max_us,100164
+baseline,deadline_misses,0

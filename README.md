@@ -56,6 +56,7 @@ and compile to nothing when the devicetree aliases are absent.
 | Decoded request/reply cycle | `measurements/figures/exportar_f3.py` over `pulso_limpo2.sr` |
 | Containment of excessive rate requests | `measurements/campaign/ataques.csv` |
 | Conditions of every run | `measurements/campaign/environment.txt` |
+| Threat model experiments, network loss, update and certificate failure; timing distributions over five load conditions (IEEE version) | `measurements/ieee_20261025/` (see its README) |
 
 `measurements/ANALISADOR_LOGICO.md` (Portuguese) documents the bench: wiring,
 how each quantity is extracted from the raw samples, which acquisitions are the

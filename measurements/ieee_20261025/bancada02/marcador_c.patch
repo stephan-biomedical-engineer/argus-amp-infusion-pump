@@ -1,0 +1,53 @@
+diff -ru a/include/markers.h b/include/markers.h
+--- a/include/markers.h	2026-10-25 11:03:36.084797900 -0300
++++ b/include/markers.h	2026-10-25 11:03:36.127808343 -0300
+@@ -67,4 +67,37 @@
+ 
+ #endif
+ 
++/* -------------------------------------------------------------------------
++ * Marcador C (bancada 02, opcional): inverte o nivel a cada volta do laco do
++ * logic_engine que termina por timeout do k_poll (a mesma condicao que
++ * hub_metrics_loop_tick() conta). O intervalo entre bordas consecutivas e o
++ * periodo do laco. Inverter, e nao pulsar, para que a borda sobreviva a uma
++ * amostragem lenta do analisador.
++ *
++ * So existe com o alias la-marker-c, que vem de um overlay de bancada
++ * (plano_ieee/patches/marcador_c.overlay). Sem ele, nao gera codigo.
++ * ------------------------------------------------------------------------- */
++#if DT_NODE_EXISTS(DT_ALIAS(la_marker_c))
++
++static inline void argus_marker_c_toggle(void)
++{
++    static const struct gpio_dt_spec c = GPIO_DT_SPEC_GET(DT_ALIAS(la_marker_c), gpios);
++    static bool pronto;
++
++    if(!pronto)
++    {
++        if(!device_is_ready(c.port))
++            return;
++        gpio_pin_configure_dt(&c, GPIO_OUTPUT_INACTIVE);
++        pronto = true;
++    }
++    gpio_pin_toggle_dt(&c);
++}
++
++#else
++
++static inline void argus_marker_c_toggle(void) {}
++
++#endif
++
+ #endif /* MARKERS_H */
+diff -ru a/src/logic_engine.c b/src/logic_engine.c
+--- a/src/logic_engine.c	2026-10-25 11:03:36.085798142 -0300
++++ b/src/logic_engine.c	2026-10-25 11:03:36.127808343 -0300
+@@ -137,6 +137,8 @@
+          * temporizador sob carga. Acima de LOOP_DEADLINE_US conta como
+          * deadline miss. */
+         hub_metrics_loop_tick(poll_wait_us, (poll_rc == -EAGAIN));
++        if(poll_rc == -EAGAIN)
++            argus_marker_c_toggle();
+ 
+         /* --- 1. Processamento de Comandos (Vindo do SPI/Hub) --- */
+         if(events[0].state == K_POLL_STATE_MSGQ_DATA_AVAILABLE)

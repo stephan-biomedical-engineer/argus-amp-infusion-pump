@@ -1,0 +1,9 @@
+experimento,metrica,valor
+E13,pedido_600_efetivo,600.000
+E13,pedido_1200_efetivo,1200.000
+E13,pedido_5000_efetivo,5000.000
+E13,pedido_65000_efetivo,65000.000
+E13,pedidos,4.000
+E13,contidos,0.000
+E13,defesa_segurou,0
+E13,observacao,NENHUM pedido foi limitado pelo MCU

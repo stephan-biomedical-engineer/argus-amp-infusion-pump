@@ -1,0 +1,14 @@
+label,metrica,valor
+sem-rotulo,frames_seen,433
+sem-rotulo,crc_errors,198
+sem-rotulo,driver_errors,23
+sem-rotulo,spi_resets,221
+sem-rotulo,recoveries,182
+sem-rotulo,max_recovery_us,21650
+sem-rotulo,cmd_count,0
+sem-rotulo,cmd_lat_max_us,0
+sem-rotulo,cmd_lat_avg_us,0
+sem-rotulo,loop_count,246
+sem-rotulo,loop_period_min_us,100033
+sem-rotulo,loop_period_max_us,100271
+sem-rotulo,deadline_misses,0

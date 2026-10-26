@@ -1,0 +1,4 @@
+experimento,metrica,valor
+E14,ciclos,3.000
+E14,indisponibilidade_media_ms,219.683
+E14,observacao,gateway impoe 220 ms de indisponibilidade por reset; em laco, negacao continua

@@ -1,0 +1,4 @@
+Booted from: rootfs.0 (A)
+Activated: rootfs.0 (A)
+=== Slot States ===
+[1mx[0m [32m[32m[1m[rootfs.0][0m (/dev/mmcblk0p2, ext4, [1mbooted[0m)

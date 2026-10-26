@@ -1,0 +1,14 @@
+label,metrica,valor
+combined,frames_seen,4099
+combined,crc_errors,0
+combined,driver_errors,5
+combined,spi_resets,5
+combined,recoveries,0
+combined,max_recovery_us,0
+combined,cmd_count,2500
+combined,cmd_lat_max_us,129
+combined,cmd_lat_avg_us,82
+combined,loop_count,45
+combined,loop_period_min_us,100073
+combined,loop_period_max_us,100267
+combined,deadline_misses,0

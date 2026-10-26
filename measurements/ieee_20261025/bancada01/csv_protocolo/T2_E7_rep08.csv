@@ -1,0 +1,5 @@
+experimento,metrica,valor
+E7,reenvios,20.000
+E7,aceitos,20.000
+E7,defesa_segurou,0
+E7,observacao,protocolo SEM protecao contra replay -- quadro capturado e reaceito indefinidamente
